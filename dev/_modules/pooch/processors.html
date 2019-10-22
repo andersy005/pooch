@@ -208,29 +208,13 @@
 <span class="sd">Post-processing hooks for Pooch.fetch</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">bz2</span>
 <span class="kn">import</span> <span class="nn">gzip</span>
+<span class="kn">import</span> <span class="nn">lzma</span>
 <span class="kn">import</span> <span class="nn">shutil</span>
 <span class="kn">from</span> <span class="nn">zipfile</span> <span class="k">import</span> <span class="n">ZipFile</span>
 <span class="kn">from</span> <span class="nn">tarfile</span> <span class="k">import</span> <span class="n">TarFile</span>
 <span class="kn">from</span> <span class="nn">warnings</span> <span class="k">import</span> <span class="n">warn</span>
-
-<span class="c1"># Try getting the 2.7 backports of lzma and bz2. Can be deleted when dropping 2.7</span>
-<span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="kn">import</span> <span class="nn">bz2file</span> <span class="k">as</span> <span class="nn">bz2</span>
-    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-        <span class="n">bz2</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">bz2</span>
-<span class="k">try</span><span class="p">:</span>
-    <span class="kn">import</span> <span class="nn">lzma</span>
-<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="kn">from</span> <span class="nn">backports</span> <span class="k">import</span> <span class="n">lzma</span>
-    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-        <span class="c1"># Make this an optional dependency</span>
-        <span class="n">lzma</span> <span class="o">=</span> <span class="kc">None</span>
 
 
 <span class="k">class</span> <span class="nc">ExtractorProcessor</span><span class="p">:</span>  <span class="c1"># pylint: disable=too-few-public-methods</span>
@@ -418,11 +402,6 @@
 <span class="sd">    automatically determine the compression method. This can be overwritten by setting</span>
 <span class="sd">    the *method* argument.</span>
 
-<span class="sd">    .. warning::</span>
-
-<span class="sd">        With **Python 2.7**, methods &quot;lzma&quot;/&quot;xz&quot; and &quot;bzip2&quot; require extra dependencies</span>
-<span class="sd">        to be installed: ``backports.lzma`` for &quot;lzma&quot; and ``bz2file`` for &quot;bzip2&quot;.</span>
-
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    method : str</span>
@@ -497,15 +476,6 @@
                 <span class="s2">&quot;Invalid compression method &#39;</span><span class="si">{}</span><span class="s2">&#39;. Must be one of &#39;</span><span class="si">{}</span><span class="s2">&#39;.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                     <span class="n">method</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
                 <span class="p">)</span>
-            <span class="p">)</span>
-        <span class="c1"># Check for Python 2.7 extra dependencies</span>
-        <span class="k">if</span> <span class="n">method</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;lzma&quot;</span><span class="p">,</span> <span class="s2">&quot;xz&quot;</span><span class="p">]</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="s2">&quot;lzma&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">&quot;LZMA/xz support requires the &#39;backports.lzma&#39; package in Python 2.7&quot;</span>
-            <span class="p">)</span>
-        <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;bzip2&quot;</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="s2">&quot;bzip2&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">&quot;bzip2 support requires the &#39;bz2file&#39; package in Python 2.7&quot;</span>
             <span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">method</span><span class="p">]</span></div>
 </pre></div>

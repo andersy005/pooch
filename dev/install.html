@@ -217,11 +217,10 @@
 <span id="install"></span><h1>Installing<a class="headerlink" href="#installing" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="which-python">
 <h2>Which Python?<a class="headerlink" href="#which-python" title="Permalink to this headline">¶</a></h2>
-<p>You’ll need Python 2.7 or <strong>Python &gt;=3.5 (recommended)</strong>.</p>
+<p>You’ll need <strong>Python &gt;= 3.5</strong>.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p class="last">🚨 <strong>Pooch v0.6.0 is the last release to support Python 2.7. Please update to Python
-3 or use Pooch &lt;= 0.6.0.</strong> 🚨</p>
+<p class="last"><strong>Python 2.7 is no longer supported. Use Pooch &lt;= 0.6.0 if you need 2.7 support.</strong></p>
 </div>
 <p>We recommend using the
 <a class="reference external" href="https://www.anaconda.com/download">Anaconda Python distribution</a>
@@ -242,17 +241,6 @@ doesn’t interfere with any other Python installations in your system.</p>
 <ul class="simple">
 <li><a class="reference external" href="https://github.com/tqdm/tqdm">tqdm</a>: Required to print a download progress bar
 (see <a class="reference internal" href="api/generated/pooch.HTTPDownloader.html#pooch.HTTPDownloader" title="pooch.HTTPDownloader"><code class="xref py py-class docutils literal notranslate"><span class="pre">pooch.HTTPDownloader</span></code></a>).</li>
-</ul>
-<p>The following are only required for Python 2.7:</p>
-<ul class="simple">
-<li><a class="reference external" href="https://pypi.org/project/pathlib/">pathlib</a></li>
-<li><a class="reference external" href="https://pypi.org/project/backports.tempfile/">backports.tempfile</a></li>
-</ul>
-<p>If using <a class="reference internal" href="api/generated/pooch.Decompress.html#pooch.Decompress" title="pooch.Decompress"><code class="xref py py-class docutils literal notranslate"><span class="pre">pooch.Decompress</span></code></a> in Python 2.7, the following extra packages might
-need to be installed (they will not be automatically installed when installing Pooch):</p>
-<ul class="simple">
-<li><a class="reference external" href="https://pypi.org/project/backports.lzma/">backports.lzma</a></li>
-<li><a class="reference external" href="https://pypi.org/project/bz2file/">bz2file</a></li>
 </ul>
 </div>
 <div class="section" id="installing-with-conda">
